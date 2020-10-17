@@ -178,7 +178,6 @@ class ThrowerAnt(Ant):
 
         plc = self.place
         place_counter = 0
-        print("DEBUG: ", self.min_range, self.max_range)
         while plc != beehive:
             if len(plc.bees) != 0 and self.min_range <= place_counter <= self.max_range:
                 return rANTdom_else_none(plc.bees)
