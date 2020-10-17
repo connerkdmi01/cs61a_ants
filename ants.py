@@ -239,7 +239,7 @@ class FireAnt(Ant):
     food_cost = 5
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 5
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
 
     # END Problem 5
 
@@ -256,13 +256,17 @@ class FireAnt(Ant):
         """
         # BEGIN Problem 5
         Ant.reduce_armor(self, amount)
-        bees = self.place.bees[:]
-        for i in bees:
-            Bee.reduce_armor(i, amount)
+        bee_list = self.place.bees[:]
 
-        if self.armor <= 0:
-            for i in bees:
-                Bee.reduce_armor(i, self.damage)
+
+        if self.armor > 0:
+            for i in bee_list:
+                i.reduce_armor(amount)
+        
+
+        elif self.armor <= 0:
+            for i in bee_list:
+                i.reduce_armor(self.damage + amount)
             self.place.remove_insect(self)
             self.death_callback()
         # END Problem 5
@@ -275,22 +279,34 @@ class HungryAnt(Ant):
     food_cost = 4
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 6
-    implemented = False   # Change to True to view in the GUI
+    time_to_digest = 3
+    implemented = True   # Change to True to view in the GUI
     # END Problem 6
 
     def __init__(self, armor=1):
         # BEGIN Problem 6
         "*** YOUR CODE HERE ***"
+        Ant.__init__(self, armor)
+        self.armor = armor
+        self.digesting = 0
         # END Problem 6
 
     def eat_bee(self, bee):
         # BEGIN Problem 6
         "*** YOUR CODE HERE ***"
+        bee.reduce_armor(bee.armor)
+        self.digesting = self.time_to_digest
         # END Problem 6
 
     def action(self, gamestate):
         # BEGIN Problem 6
         "*** YOUR CODE HERE ***"
+        if self.digesting > 0:
+            self.digesting = self.digesting - 1
+        else:
+            if len(self.place.bees):
+                self.eat_bee(rANTdom_else_none(self.place.bees))
+
         # END Problem 6
 
 
