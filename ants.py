@@ -255,20 +255,27 @@ class FireAnt(Ant):
         if the fire ant dies.
         """
         # BEGIN Problem 5
-        Ant.reduce_armor(self, amount)
         bee_list = self.place.bees[:]
+        wiggle = self.armor
+        wiggle -= amount
 
-
-        if self.armor > 0:
-            for i in bee_list:
-                i.reduce_armor(amount)
+        for i in bee_list:
+            i.reduce_armor(amount)
+        
+        
+        if wiggle <= 0:
+            if len(bee_list) > 0:
+                for i in bee_list:
+                    i.reduce_armor(self.damage)
+            
+        Ant.reduce_armor(self, amount)
+            
+            
+                    
+                    
+            
         
 
-        elif self.armor <= 0:
-            for i in bee_list:
-                i.reduce_armor(self.damage + amount)
-            self.place.remove_insect(self)
-            self.death_callback()
         # END Problem 5
 
 class HungryAnt(Ant):
@@ -313,6 +320,14 @@ class HungryAnt(Ant):
 
 # BEGIN Problem 7
 # The WallAnt class
+class WallAnt(Ant):
+    name = "Wall"
+    implemented = True
+    food_cost = 4
+    def __init__(self, armor=4):
+        """Create an Ant with an ARMOR quantity."""
+        Ant.__init__(self, armor)
+
 # END Problem 7
 
 
