@@ -243,7 +243,16 @@ class FireAnt(Ant):
         if the fire ant dies.
         """
         # BEGIN Problem 5
-        "*** YOUR CODE HERE ***"
+        self.armor -= amount
+
+        for i in self.place.bees:
+            i.reduce_armor(amount)
+
+        if self.armor <= 0:
+            for i in self.place.bees:
+                i.reduce_armor(damage)
+            self.place.remove_insect(self)
+            self.death_callback()
         # END Problem 5
 
 class HungryAnt(Ant):
