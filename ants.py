@@ -256,13 +256,13 @@ class FireAnt(Ant):
         """
         # BEGIN Problem 5
         Ant.reduce_armor(self, amount)
-        if self.armor >0:
-            for i in self.place.bees:
-                i.reduce_armor(amount)
+        bees = self.place.bees[:]
+        for i in bees:
+            Bee.reduce_armor(i, amount)
 
         if self.armor <= 0:
-            for i in self.place.bees:
-                i.reduce_armor(damage + amount)
+            for i in bees:
+                Bee.reduce_armor(i, self.damage)
             self.place.remove_insect(self)
             self.death_callback()
         # END Problem 5
