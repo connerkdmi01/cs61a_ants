@@ -171,9 +171,9 @@ class ThrowerAnt(Ant):
         """
         # BEGIN Problem 3 and 4
         plc = self.place
-        while plc.entrance != beehive:
-            if len(plc.entrance.bees) != 0:
-                return rANTdom_else_none(plc.entrance.bees)
+        while plc != beehive:
+            if len(plc.bees) != 0:
+                return rANTdom_else_none(plc.bees)
             plc = plc.entrance
         return None
         # END Problem 3 and 4
