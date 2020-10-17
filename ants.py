@@ -52,6 +52,7 @@ class Insect:
 
     damage = 0
     # ADD CLASS ATTRIBUTES HERE
+    is_watersafe = False
 
     def __init__(self, armor, place=None):
         """Create an Insect with an ARMOR amount and a starting PLACE."""
@@ -256,19 +257,19 @@ class FireAnt(Ant):
         """
         # BEGIN Problem 5
         bee_list = self.place.bees[:]
-        wiggle = self.armor
-        wiggle -= amount
+        Ant.reduce_armor(self, amount)
+        
 
         for i in bee_list:
             i.reduce_armor(amount)
         
         
-        if wiggle <= 0:
+        if self.armor <= 0:
             if len(bee_list) > 0:
                 for i in bee_list:
                     i.reduce_armor(self.damage)
-            
-        Ant.reduce_armor(self, amount)
+
+        
             
             
                     
@@ -339,6 +340,9 @@ class Water(Place):
         its armor to 0."""
         # BEGIN Problem 8
         "*** YOUR CODE HERE ***"
+        Place.add_insect(self, insect)
+        if insect.is_watersafe == False:
+            insect.reduce_armor(insect.armor)
         # END Problem 8
 
 # BEGIN Problem 9
@@ -397,6 +401,7 @@ class Bee(Insect):
     name = 'Bee'
     damage = 1
     # OVERRIDE CLASS ATTRIBUTES HERE
+    is_watersafe = True
 
 
     def sting(self, ant):
