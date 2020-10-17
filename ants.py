@@ -166,19 +166,21 @@ class ThrowerAnt(Ant):
     # ADD/OVERRIDE CLASS ATTRIBUTES HERE
     food_cost = 3
     min_range = 0
-    max_range = 10
+    max_range = float('inf')
 
-    def nearest_bee(self, beehive, min_range = 0, max_range = float('inf')):
+    def nearest_bee(self, beehive):
         """Return the nearest Bee in a Place that is not the HIVE (beehive), connected to
         the ThrowerAnt's Place by following entrances.
 
         This method returns None if there is no such Bee (or none in range).
         """
         # BEGIN Problem 3 and 4
+
         plc = self.place
-        place_counter = 0
+        place_counter = 1
+        print("DEBUG: ", self.min_range, self.max_range)
         while plc != beehive:
-            if len(plc.bees) != 0 and min_range <= place_counter <= max_range:
+            if len(plc.bees) != 0 and self.min_range < place_counter < self.max_range:
                 return rANTdom_else_none(plc.bees)
             plc = plc.entrance
             place_counter += 1
@@ -225,7 +227,7 @@ class LongThrower(ThrowerAnt):
     food_cost = 2
     # OVERRIDE CLASS ATTRIBUTES HERE
     min_range = 5
-    max_range = 10
+    max_range = float('inf')
     # BEGIN Problem 4
     implemented = True   # Change to True to view in the GUI
     # END Problem 4
