@@ -240,6 +240,7 @@ class FireAnt(Ant):
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 5
     implemented = False   # Change to True to view in the GUI
+
     # END Problem 5
 
     def __init__(self, armor=3):
@@ -254,14 +255,14 @@ class FireAnt(Ant):
         if the fire ant dies.
         """
         # BEGIN Problem 5
-        self.armor -= amount
-
-        for i in self.place.bees:
-            i.reduce_armor(amount)
+        Ant.reduce_armor(self, amount)
+        if self.armor >0:
+            for i in self.place.bees:
+                i.reduce_armor(amount)
 
         if self.armor <= 0:
             for i in self.place.bees:
-                i.reduce_armor(damage)
+                i.reduce_armor(damage + amount)
             self.place.remove_insect(self)
             self.death_callback()
         # END Problem 5
