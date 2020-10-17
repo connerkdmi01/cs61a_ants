@@ -25,6 +25,8 @@ class Place:
         # Phase 1: Add an entrance to the exit
         # BEGIN Problem 2
         "*** YOUR CODE HERE ***"
+        if exit != None: 
+            exit.entrance = self
         # END Problem 2
 
     def add_insect(self, insect):
@@ -161,14 +163,19 @@ class ThrowerAnt(Ant):
     damage = 1
     # ADD/OVERRIDE CLASS ATTRIBUTES HERE
 
-    def nearest_bee(self, beehive):
+    def nearest_bee(self, beehive, min_range = 0, max_range = float('inf')):
         """Return the nearest Bee in a Place that is not the HIVE (beehive), connected to
         the ThrowerAnt's Place by following entrances.
 
         This method returns None if there is no such Bee (or none in range).
         """
         # BEGIN Problem 3 and 4
-        return rANTdom_else_none(self.place.bees) # REPLACE THIS LINE
+        plc = self.place
+        while plc.entrance != beehive:
+            if len(plc.entrance.bees) != 0:
+                return rANTdom_else_none(plc.entrance.bees)
+            plc = plc.entrance
+        return None
         # END Problem 3 and 4
 
     def throw_at(self, target):
