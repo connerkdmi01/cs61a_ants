@@ -237,8 +237,8 @@ class FireAnt(Ant):
 
     name = 'Fire'
     damage = 3
-    food_cost = 5
     # OVERRIDE CLASS ATTRIBUTES HERE
+    food_cost = 5
     # BEGIN Problem 5
     implemented = True   # Change to True to view in the GUI
 
@@ -257,17 +257,18 @@ class FireAnt(Ant):
         """
         # BEGIN Problem 5
         bee_list = self.place.bees[:]
-        Ant.reduce_armor(self, amount)
         
 
-        for i in bee_list:
-            i.reduce_armor(amount)
-        
+        for bee in bee_list:
+            bee.reduce_armor(amount)
+
+        bee_fart = self.place.bees[:]
+        Ant.reduce_armor(self, amount)
         
         if self.armor <= 0:
-            if len(bee_list) > 0:
-                for i in bee_list:
-                    i.reduce_armor(self.damage)
+            for bee in bee_fart:
+                bee.reduce_armor(self.damage)
+        
             
         
         
