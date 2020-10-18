@@ -268,6 +268,9 @@ class FireAnt(Ant):
             if len(bee_list) > 0:
                 for i in bee_list:
                     i.reduce_armor(self.damage)
+            
+        
+        
 
         
             
