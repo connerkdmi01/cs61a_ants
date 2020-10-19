@@ -414,9 +414,10 @@ class QueenAnt(ScubaThrower):  # You should change this line
         "*** YOUR CODE HERE ***"
         self.armor -= amount
         if self.armor <= 0:
-            self.death_callback()
             if self.fake == False:
                 bees_win()
+            else:
+                self.place.remove_insect(self)
         # END Problem EC
 
 
