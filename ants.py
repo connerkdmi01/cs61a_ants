@@ -380,10 +380,10 @@ class QueenAnt(ScubaThrower):  # You should change this line
     def __init__(self, armor=1):
         # BEGIN Problem EC
         "*** YOUR CODE HERE ***"
-        Ant.__init__(self, armor)
-        self.armor = armor
         if QueenAnt.qCounter == 0:
             self.fake = False
+        ScubaThrower.__init__(self, armor)
+        self.armor = armor
         QueenAnt.qCounter += 1
         # END Problem EC
 
@@ -396,9 +396,9 @@ class QueenAnt(ScubaThrower):  # You should change this line
         # BEGIN Problem EC
         "*** YOUR CODE HERE ***"
         if self.fake == True:
-            reduce_armor(self, self.armor)
+            self.reduce_armor(self.armor)
         else: 
-            ThrowerAnt.action(gamestate)
+            ScubaThrower.action(self, gamestate)
             plc = self.place
             while plc.exit != None:
                 if plc.ant != None and plc.ant.double_damage == False:
@@ -415,8 +415,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
         self.armor -= amount
         if self.armor <= 0:
             self.death_callback()
-            if self.false == False:
-                bees_win()
+            bees_win()
         # END Problem EC
 
 
