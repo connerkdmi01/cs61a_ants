@@ -398,12 +398,16 @@ class QueenAnt(ScubaThrower):  # You should change this line
         if self.fake == True:
             self.reduce_armor(self.armor)
         else: 
+            # throwing
             ScubaThrower.action(self, gamestate)
+
+            # buffing
             plc = self.place
             while plc.exit != None:
-                if plc.ant != None and plc.ant.double_damage == False:
+                if plc.ant != None and plc.ant.double_damage == False and plc != self.place:
                     plc.ant.damage = plc.ant.damage * 2
                     plc.ant.double_damage = True
+                plc = plc.exit
         # END Problem EC
 
     def reduce_armor(self, amount):
@@ -415,8 +419,21 @@ class QueenAnt(ScubaThrower):  # You should change this line
         self.armor -= amount
         if self.armor <= 0:
             self.death_callback()
+            QueenAnt.remove_from(self, self.place)
             if self.fake == False:
                 bees_win()
+
+
+    def remove_from(self, place):
+        print("DEBUG: place.ant.fake: ", place.ant.fake)
+        if place.ant.fake == True:  # place.ant is self and \
+            print("DEBUG: place.ant BEFORE: ", place.ant)
+            
+            # place.ant = None
+            Insect.remove_from(self, place)
+            
+            print("DEBUG: place.ant AFTER: ", place.ant)
+
         # END Problem EC
 
 
