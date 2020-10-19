@@ -418,22 +418,10 @@ class QueenAnt(ScubaThrower):  # You should change this line
         "*** YOUR CODE HERE ***"
         self.armor -= amount
         if self.armor <= 0:
-            self.death_callback()
-            QueenAnt.remove_from(self, self.place)
             if self.fake == False:
                 bees_win()
-
-
-    def remove_from(self, place):
-        print("DEBUG: place.ant.fake: ", place.ant.fake)
-        if place.ant.fake == True:  # place.ant is self and \
-            print("DEBUG: place.ant BEFORE: ", place.ant)
-            
-            # place.ant = None
-            Insect.remove_from(self, place)
-            
-            print("DEBUG: place.ant AFTER: ", place.ant)
-
+            else:
+                self.place.remove_insect(self)
         # END Problem EC
 
 
