@@ -398,12 +398,16 @@ class QueenAnt(ScubaThrower):  # You should change this line
         if self.fake == True:
             self.reduce_armor(self.armor)
         else: 
+            # throwing
             ScubaThrower.action(self, gamestate)
+
+            # buffing
             plc = self.place
             while plc.exit != None:
-                if plc.ant != None and plc.ant.double_damage == False:
+                if plc.ant != None and plc.ant.double_damage == False and plc != self.place:
                     plc.ant.damage = plc.ant.damage * 2
                     plc.ant.double_damage = True
+                plc = plc.exit
         # END Problem EC
 
     def reduce_armor(self, amount):
