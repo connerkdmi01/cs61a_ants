@@ -105,6 +105,9 @@ class Ant(Insect):
 
     implemented = False  # Only implemented Ant classes should be instantiated
     food_cost = 0
+
+    double_damage = False
+
     # ADD CLASS ATTRIBUTES HERE
 
     def __init__(self, armor=1):
@@ -359,20 +362,29 @@ class ScubaThrower(ThrowerAnt):
 # END Problem 9
 
 # BEGIN Problem EC
-class QueenAnt(Ant):  # You should change this line
+class QueenAnt(ScubaThrower):  # You should change this line
 # END Problem EC
     """The Queen of the colony. The game is over if a bee enters her place."""
 
     name = 'Queen'
     food_cost = 7
+
+    fake = True
+    qCounter = 0
+
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem EC
-    implemented = False   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
     # END Problem EC
 
     def __init__(self, armor=1):
         # BEGIN Problem EC
         "*** YOUR CODE HERE ***"
+        Ant.__init__(self, armor)
+        self.armor = armor
+        if QueenAnt.qCounter == 0:
+            self.fake = False
+        QueenAnt.qCounter += 1
         # END Problem EC
 
     def action(self, gamestate):
@@ -383,6 +395,15 @@ class QueenAnt(Ant):  # You should change this line
         """
         # BEGIN Problem EC
         "*** YOUR CODE HERE ***"
+        if self.fake == True:
+            reduce_armor(self, self.armor)
+        else: 
+            ThrowerAnt.action(gamestate)
+            plc = self.place
+            while plc.exit != None:
+                if plc.ant != None and plc.ant.double_damage == False:
+                    plc.ant.damage = plc.ant.damage * 2
+                    plc.ant.double_damage = True
         # END Problem EC
 
     def reduce_armor(self, amount):
@@ -391,6 +412,11 @@ class QueenAnt(Ant):  # You should change this line
         """
         # BEGIN Problem EC
         "*** YOUR CODE HERE ***"
+        self.armor -= amount
+        if self.armor <= 0:
+            self.death_callback()
+            if self.false == False:
+                bees_win()
         # END Problem EC
 
 
