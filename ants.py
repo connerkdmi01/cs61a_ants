@@ -415,7 +415,8 @@ class QueenAnt(ScubaThrower):  # You should change this line
         self.armor -= amount
         if self.armor <= 0:
             self.death_callback()
-            bees_win()
+            if self.fake == False:
+                bees_win()
         # END Problem EC
 
 
