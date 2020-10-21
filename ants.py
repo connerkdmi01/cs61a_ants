@@ -35,13 +35,16 @@ class Place:
             it can be enhanced in subclasses.
         """
         insect.add_to(self)
-
+  
     def remove_insect(self, insect):
         """
         Asks the insect to remove itself from the current place. This method exists so
             it can be enhanced in subclasses.
         """
-        insect.remove_from(self)
+        if isinstance(insect, QueenAnt) and insect.fake == False:
+            pass
+        else:
+            insect.remove_from(self)
 
     def __str__(self):
         return self.name
@@ -419,10 +422,14 @@ class QueenAnt(ScubaThrower):  # You should change this line
         self.armor -= amount
         if self.armor <= 0:
             if self.fake == False:
+                self.death_callback()
                 bees_win()
             else:
+                self.death_callback()
                 self.place.remove_insect(self)
         # END Problem EC
+
+    
 
 
 
